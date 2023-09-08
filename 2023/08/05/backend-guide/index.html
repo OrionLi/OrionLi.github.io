@@ -192,7 +192,45 @@
 </ul>
 <p>当请求最后到达服务器，服务器的程序会按照后端编写的逻辑处理数据，和数据库交互，最后将结果返回给前端</p>
 <p>可以用一个图来简单描述一下前后端在一个淘宝用户从下单到完成过程中分别干的事</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant 用户</span><br><span class="line">    participant 前端网页</span><br><span class="line">    participant 后端服务</span><br><span class="line">    participant 数据库</span><br><span class="line"></span><br><span class="line">    用户-&gt;&gt;前端网页: 选择商品并下单</span><br><span class="line">    前端网页-&gt;&gt;后端服务: 发送下单请求</span><br><span class="line">    activate 后端服务</span><br><span class="line"></span><br><span class="line">    后端服务-&gt;&gt;后端服务: 验证用户身份和库存</span><br><span class="line">    后端服务-&gt;&gt;数据库: 更新库存信息</span><br><span class="line">    activate 数据库</span><br><span class="line"></span><br><span class="line">    数据库--&gt;&gt;后端服务: 返回库存更新结果</span><br><span class="line">    deactivate 数据库</span><br><span class="line"></span><br><span class="line">    后端服务--&gt;&gt;前端网页: 返回下单结果</span><br><span class="line">    deactivate 后端服务</span><br><span class="line"></span><br><span class="line">    前端网页-&gt;&gt;用户: 显示下单结果</span><br><span class="line"></span><br><span class="line">    用户-&gt;&gt;前端网页: 完成支付</span><br><span class="line">    前端网页-&gt;&gt;后端服务: 发送支付请求</span><br><span class="line">    activate 后端服务</span><br><span class="line"></span><br><span class="line">    后端服务-&gt;&gt;后端服务: 验证支付信息和库存</span><br><span class="line">    后端服务-&gt;&gt;数据库: 更新库存信息和订单状态</span><br><span class="line">    activate 数据库</span><br><span class="line"></span><br><span class="line">    数据库--&gt;&gt;后端服务: 返回库存更新结果和订单状态</span><br><span class="line">    deactivate 数据库</span><br><span class="line"></span><br><span class="line">    后端服务--&gt;&gt;前端网页: 返回支付结果和订单状态</span><br><span class="line">    deactivate 后端服务</span><br><span class="line"></span><br><span class="line">    前端网页-&gt;&gt;用户: 显示支付结果和订单状态</span><br></pre></td></tr></table></figure>
+<div class="mermaid-wrap"><pre class="mermaid-src" hidden>
+  sequenceDiagram
+    participant 用户
+    participant 前端网页
+    participant 后端服务
+    participant 数据库
+
+    用户-&gt;&gt;前端网页: 选择商品并下单
+    前端网页-&gt;&gt;后端服务: 发送下单请求
+    activate 后端服务
+
+    后端服务-&gt;&gt;后端服务: 验证用户身份和库存
+    后端服务-&gt;&gt;数据库: 更新库存信息
+    activate 数据库
+
+    数据库--&gt;&gt;后端服务: 返回库存更新结果
+    deactivate 数据库
+
+    后端服务--&gt;&gt;前端网页: 返回下单结果
+    deactivate 后端服务
+
+    前端网页-&gt;&gt;用户: 显示下单结果
+
+    用户-&gt;&gt;前端网页: 完成支付
+    前端网页-&gt;&gt;后端服务: 发送支付请求
+    activate 后端服务
+
+    后端服务-&gt;&gt;后端服务: 验证支付信息和库存
+    后端服务-&gt;&gt;数据库: 更新库存信息和订单状态
+    activate 数据库
+
+    数据库--&gt;&gt;后端服务: 返回库存更新结果和订单状态
+    deactivate 数据库
+
+    后端服务--&gt;&gt;前端网页: 返回支付结果和订单状态
+    deactivate 后端服务
+
+    前端网页-&gt;&gt;用户: 显示支付结果和订单状态
+  </pre></div>
 
 <p>当然，这只是个简单的演示，在实际生产中，后端可能还要考虑：</p>
 <ul>
@@ -248,4 +286,40 @@ function panguInit () {
   }
 }
 
-document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addModeChange('mermaid', runMermaid)
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/blog/js/search/local-search.js"></script></div></div></body></html>
